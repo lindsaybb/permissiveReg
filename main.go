@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"log"
-	"log/syslog
+	"log/syslog"
 	"os"
 	"path/filepath"
 	"strings"
