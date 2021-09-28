@@ -5,16 +5,23 @@ wainsWorld is an Iskratel PON utility program that uses the lindsaybb/gopon libr
 | Flag | Description |
 | ------ | ------ |
 | -h | Show this help |
-| -t | Hostname or IP Address of OLT (default "10.5.100.10" for our production OLT) |
+| -v | Version iterative for reference |
+| -ip | Hostname or IP Address of OLT (default "10.5.100.10" for our production OLT) |
 | -s | Sleep interval for Loop (default 5, interpreted as seconds) |
 | -o | Run program once then exit (default false) |
-| -i | Filter by interface (example "0/7" will only reg/dereg devices on port 7) |
-| -p | Path to create Logfile in (folder, filename is auto-generated) |
+| -dr | Don't deregister devices when Operationally Down |
+| -df | Number of times a deregister candidate will buffer (flap) before being removed |
+| -if | Filter by interface (ex "0/7" or "7" will only reg/dereg devices on port 0/7) |
+| -ll | Create Local Log (def: false, use syslog) |
+| -sl | Syslog server (IP:Port) |
+| -lp | Path to create Logfile in (folder, filename is auto-generated date-time) |
 | -sp | Service Prifle to Register Devices with (default "102_DATA_Acc" for ONU UNI 1 Gigabit service) |
+
+
 
 # Example Call
 ```sh
-./wainsWorld -p ~/prod >> ~/prod/so37543.log &
+./wainsWorld -lp ~/prod >> ~/prod/so37543.log &
 tail -f ~/prod/2021-07-20T11-01-10.log
 ```
 
