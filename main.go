@@ -60,12 +60,12 @@ func main() {
 		defer slog.Close()
 	}
 	// create OLT object and verify connection
-	olt := gopon.NewLumiaOlt(*hostFlag)
+	olt := goPon.NewLumiaOlt(*hostFlag)
 	if !olt.HostIsReachable() {
 		log.Fatalln("Unreachable OLT")
 	}
 	// load currently registered device list into memory
-	err = olt.UpdateOnuRegistry()
+	err := olt.UpdateOnuRegistry()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -164,22 +164,22 @@ func deregOnuCounter(olt *goPon.LumiaOlt, onu chan *goPon.OnuInfo) {
 
 }
 
-func autoRegisterOnu(olt *gopon.LumiaOlt, obl *gopon.OnuBlacklist) (string, error) {
+func autoRegisterOnu(olt *goPon.LumiaOlt, obl *goPon.OnuBlacklist) (string, error) {
 	// create ONU Register Object from Blacklist info
-	oreg := &gopon.OnuRegister{
+	oreg := &goPon.OnuRegister{
 		SerialNumber: obl.SerialNumber,
 	}
 	// update object with Interface to be registered on (next free)
 	oreg = olt.NextAvailableOnuInterfaceUpdateRegister(obl.IfName, oreg)
 	// use the oreg object to create an ONU Config
-	onuCfg := gopon.NewOnuConfig(oreg.SerialNumber, oreg.Interface)
+	onuCfg := goPon.NewOnuConfig(oreg.SerialNumber, oreg.Interface)
 	// Override Authorize does not check Auth List or Vendor Prefix
 	err := olt.AuthorizeOnuOverride(onuCfg)
 	if err != nil {
 		return oreg.Interface, err
 	}
 	// create ONU Service Profile according to supplied flag
-	onuSvc := gopon.NewOnuProfile(onuCfg.IfName, *serviceFlag)
+	onuSvc := goPon.NewOnuProfile(onuCfg.IfName, *serviceFlag)
 	// if service does not exist, ONU will still register but not pass data
 	err = olt.PostOnuProfile(onuSvc)
 	return oreg.Interface, err
