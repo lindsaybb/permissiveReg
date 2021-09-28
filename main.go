@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lindsaybb/gopon"
+	"github.com/lindsaybb/goPon"
 )
 
 var (
