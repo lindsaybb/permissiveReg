@@ -19,7 +19,7 @@ var (
 	sleepFlag   = flag.Int("s", 10, "Sleep Interval for Loop")
 	onceFlag    = flag.Bool("o", false, "Run once then exit")
 	dregFlag    = flag.Bool("dr", false, "Don't deregister devices (double negative)")
-	flagFlag    = flag.Int("df", 10, "Amount of times a dereg candidate can 'flap' before removal")
+	flapFlag    = flag.Int("df", 10, "Amount of times a dereg candidate can 'flap' before removal")
 	intfFlag    = flag.String("if", "", "Filter by interface (ex. 0/7)")
 	localLog    = flag.Bool("ll", false, "Log Locally")
 	syslogFlag  = flag.String("sl", "10.5.100.5:514", "Syslog Server (IP:Port)")
@@ -144,7 +144,7 @@ func deregOnuCounter(olt *goPon.LumiaOlt, onu chan *goPon.OnuInfo) {
 		// receive a new OnuInfo object
 		entry := <-onu
 		dereg[entry.SerialNumber]++
-		if dereg[entry.SerialNumber] >= *flagFlag {
+		if dereg[entry.SerialNumber] >= *flapFlag {
 			err := olt.DeauthOnuBySn(entry.SerialNumber)
 			if err != nil {
 				log.Printf("FAILED to deauth %s:%s\n%v\n", entry.SerialNumber, entry.IfName, err)
