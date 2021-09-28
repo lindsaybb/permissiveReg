@@ -80,7 +80,7 @@ func main() {
 		s := time.Now()
 		// BlackList Registration Section
 		// Will register any ONU with the Service Profile flag
-		obll, err := olt.GetOnuBlacklist()
+		obll, err = olt.GetOnuBlacklist()
 		if err != nil {
 			log.Printf("Get Blacklist Error: %v\n", err)
 		} else if len(obll.Entry) > 0 {
